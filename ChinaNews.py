@@ -146,14 +146,15 @@ class GetChinaNews():
 				self.tag = self.tag + 1
 
 				# Write Sqlites3
-				# con = sqlite3.connect("development.sqlite3")
-				# cu = con.cursor()
-				# cu_url = newsUrl.strip().split("/")
-				# cu_info = cu_url[3].strip()
+				con = sqlite3.connect("development.sqlite3")
+				cu = con.cursor()
+				cu_url = newsUrl.strip().split("/")
+				cu_info = cu_url[3].strip()
 				# print cu_info
-				# cu.execute("insert into articles values("+newsTitle.strip()+","+strText.strip()+",1,"+cu_info+",newsTime.strip()"+","+newsTime.strip()+")")
-				# con.commit()
-				# con.close()
+				con.execute("insert into articles(title,text,author_id,info,created_at,updated_at) values('"+newsTitle.strip()+"','"+strText.strip()+"',1,'"+cu_info+"','"+newsTime.strip()+"','"+newsTime.strip()+"')")
+				print cu_info
+				con.commit()
+				con.close()
 
 
 				#store in .txt files
