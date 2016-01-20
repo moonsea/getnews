@@ -151,7 +151,7 @@ class GetChinaNews():
 				cu_url = newsUrl.strip().split("/")
 				cu_info = cu_url[3].strip()
 				# print cu_info
-				con.execute("insert into articles(title,text,author_id,info,created_at,updated_at) values('"+newsTitle.strip()+"','"+strText.strip()+"',1,'"+cu_info+"','"+newsTime.strip()+"','"+newsTime.strip()+"')")
+				con.execute("insert into articles(title,text,author_id,info,created_at,updated_at) values('"+newsTitle.strip().decode('gbk').encode('utf-8')+"','"+strText.strip().decode('gbk').encode('utf-8')+"',1,'"+cu_info.decode('gbk').encode('utf-8')+"','"+newsTime.strip()+"','"+newsTime.strip()+"')")
 				print cu_info
 				con.commit()
 				con.close()
