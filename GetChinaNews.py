@@ -4,24 +4,18 @@ from sgmllib import SGMLParser
 #20140102增加内容：添加文件列表配置项，统一输出文件的编码(IFENG的默认输出为UTF8，调整为gb2312)，得到获取的新闻列表并按照发表时间排序输出到newslist.txt
 reload(sys)
 sys.setdefaultencoding('utf8')
-"""
-默认站点列表，各站点的标签及其说明如下：
-中国新闻网(ZXW)
-网易新闻(163)
-人民网(RMW)
-新浪(SINA)
-凤凰资讯(IFENG)
-"""
+
 #下载配置
-defaultSiteList = ["ZXW","163","RMW","SINA","IFENG"] #新闻源站点设置
+#defaultSiteList = ["ZXW","163","RMW","SINA","IFENG"] #新闻源站点设置
+defaultSiteList = ["ZXW"] #新闻源站点设置
+defaultMaxNews = 100
 argD = os.getcwd()+os.path.sep+'dataNews'#default目录
 newsListFilePath = os.getcwd()+os.path.sep
 
-
-
 #默认开始结束时间
-defaultStartTime = "2013-11-02"
-defaultEndTime = "2013-11-03"
+defaultStartTime = "2015-12-01"
+defaultEndTime = "2015-12-31"
+
 #默认Url连接超时时间
 defaultSockTimeLimit = 20
 
@@ -90,9 +84,9 @@ class GetChinaNews():
 		self.root_dir_name = dirName
 		self.siteList = siteList
 		socket.setdefaulttimeout(timeLimit)
-		self.strYear = "2013"
-		self.strMonth = "11"
-		self.strDay = "02"
+		self.strYear = "2015"
+		self.strMonth = "12"
+		self.strDay = "01"
 		self.Url = "This is the roll news page Url."
 		self.tag  = 0
 		self.newsList = []
@@ -127,7 +121,6 @@ class GetChinaNews():
 			return [iList[2],iList[6],iList[10]]
 		elif site == "SINA":
 			return [iList[1],iList[3],time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(int(iList[4][-10:])))]
-
 		elif site == "IFENG":
 			return [iList[3],iList[2].split('"')[1],self.strYear+'-'+self.strMonth+'-'+self.strDay+' '+iList[1][6:11]]
 	
@@ -231,7 +224,7 @@ class GetChinaNews():
 		elif site == "IFENG":
 			pageNum = 1
 			
-			while pageNum < 1000:#set 1000,the pageNum's max value
+			while pageNum < defaultMaxNews:#set 1000,the pageNum's max value
 				self.Url = "http://news.ifeng.com/rt-channel/rtlist_"+self.strYear+self.strMonth+self.strDay+"/"+str(pageNum)+".shtml"
 				if self.getNewsFromRollPage(site) == False:
 					break
@@ -283,7 +276,7 @@ if not os.path.exists(argD):
 	os.mkdir(argD)
 
 if len(args) == 1:
-	#download:下今天的
+	#default spider today's news
 	argST = time.strftime('%Y-%m-%d')
 	argED = time.strftime('%Y-%m-%d',time.localtime(time.time()+86400))
 else:

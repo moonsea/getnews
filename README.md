@@ -1,5 +1,5 @@
 #News Spider
-> Tanks to [getnews][!https://github.com/mankunzhao/getnews.git]
+> Tanks to [getnews](https://github.com/mankunzhao/getnews.git)
 
 ---
 
@@ -14,6 +14,7 @@
 ##Configuration
 
 * defaultSiteList = ["ZXW","163","RMW","SINA","IFENG"]
+* defaultMaxNews = 1000
 * argD = os.getcwd()+os.path.sep+'dataNews'#directory of news
 
 ##Introduction
